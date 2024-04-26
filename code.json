@@ -17,7 +17,7 @@
     },
 
     "homepageURL": "https://code.usgs.gov/gecsc/dem_getter",
-    "downloadURL": "https://code.usgs.gov/gecsc/dem_getter/-/archive/1.0.0/REPOSITORY_NAME-RELEASE_VERSION.zip",
+    "downloadURL": "https://code.usgs.gov/gecsc/dem_getter/-/archive/1.0.0/dem_getter-1.0.0.zip",
     "disclaimerURL": "https://code.usgs.gov/gecsc/dem_getter/-/raw/1.0.0/DISCLAIMER.md",
     "repositoryURL": "https://code.usgs.gov/gecsc/dem_getter.git",
     "vcs": "git",
