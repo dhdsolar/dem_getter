@@ -161,8 +161,8 @@ This code was routed as IPDS entry IP-157697.
 
 Disclaimer
 =======
-[![Disclaimer](https://img.shields.io/badge/-Go_to_disclaimer-red)](DISCLAIMER_official.md) 
+[![Disclaimer](https://img.shields.io/badge/-Go_to_disclaimer-red)](DISCLAIMER.md) 
 
 License
 =======
-[![License](https://img.shields.io/badge/-Go_to_license-red)](License.md) 
+[![License](https://img.shields.io/badge/-Go_to_license-red)](LICENSE.md) 
