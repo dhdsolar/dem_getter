@@ -128,7 +128,6 @@ If you are building a virtual environment to execute this code, the following ar
 
 * numpy
 * gdal
-* pyproj
 * scipy
 * matplotlib
 

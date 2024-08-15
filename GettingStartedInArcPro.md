@@ -27,7 +27,7 @@ For general installation instructions, see the **Installation** section of the [
 
 ## Configuring ArcGIS Pro 
 
-1) Certain dependencies are required to use these tools in ArcGIS Pro. To install these packages, begin by opening Arc and clicking on "Settings."
+ Certain dependencies are required to use these tools in ArcGIS Pro. As of version 1.0.1 of this tool and version 3.3 of ArcGIS Pro these dependencies were packaged with ArcGIS Pro and **no additional configuration is needed**, but this may change in the future. If you see errors on the order of `ImportError: No module named...`, you may need to install additional modules into a virtual environment. The steps below walk through that process.
 
 ![](images/tutorial1.png)
 
@@ -43,7 +43,7 @@ For general installation instructions, see the **Installation** section of the [
 
 ![](images/tutorial4.PNG)
 
-5) Ensure that the clone is now listed as the active environment (if not, open the environments dialog again, right click your new environment, and select activate), then navigate to the "Add Packages" tab. Search for **pyproj**, then click "Install."  **If you don't see pyproj**, try navigating to the 'updates' tab next to 'add packages' and 'update all' above the list of packages. Once this is complete, search for pyrpoj again.
+5) Ensure that the clone is now listed as the active environment (if not, open the environments dialog again, right click your new environment, and select activate), then navigate to the "Add Packages" tab. Search for the missing module, then click "Install."  **If you don't see the needed module**, try navigating to the 'updates' tab next to 'add packages' and 'update all' above the list of packages. Once this is complete, search for the module again.
 
 ![](images/tutorial5.png)
 

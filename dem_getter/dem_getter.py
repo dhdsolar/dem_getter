@@ -4,9 +4,8 @@ import numpy as np
 import requests
 import sys
 import os
-from osgeo import gdal
+from osgeo import gdal,osr,ogr
 import urllib
-import pyproj #Used for transforming / reprojecting points
 ### GLOBAL VARIABLES ###
 
 #DATASETS_DICT is a dictionary that maps a simple, shorthand name for a dataset hosted by TNM to its full API query name
@@ -53,26 +52,46 @@ def reprojectXYPoints(xyPoints:list, inEPSG:int, outEPSG:int)->list:
     """Takes a list of x,y points and projects them from one coordinate reference system 
     to another based on EPSG authority code
 
-        Args:
-            xyPoints (list): List of x,y points [(x1,y1),(x2,y2),...] describing longitude, latitude or northing, easting values
-            inEPSG (int): Source coordinate reference system
-            outEPSG (int): Target coordinate reference system
-        Returns:
-            outPoints (tuple): The x,y vectors transformed into the target coordinate reference system
+    Args:
+        xyPoints (list): List of x,y points [(x1,y1),(x2,y2),...] describing longitude, latitude or easting, northing values
+        inEPSG (int): Source coordinate reference system
+        outEPSG (int): Target coordinate reference system
+    Returns:
+        outPoints (tuple): The x,y vectors transformed into the target coordinate reference system
     """
 
-    fromCRS = pyproj.CRS("EPSG:{}".format(inEPSG))
-    toCRS = pyproj.CRS("EPSG:{}".format(outEPSG))
+    #Get the spatial references from EPSG codes
+    sourceSR = osr.SpatialReference()
+    sourceSR.ImportFromEPSG(inEPSG)
+    targetSR = osr.SpatialReference()
+    targetSR.ImportFromEPSG(outEPSG)
 
-    transformer = pyproj.Transformer.from_crs(fromCRS,toCRS,always_xy = True)
+    #Some spatial references swap x,y order...(e.g., EPSG 4326, force things to always return x,y)
+    targetSR.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
 
+    #Get the transformation
+    transform = osr.CoordinateTransformation(sourceSR, targetSR)
+
+    #Preallocate some space for the transformed coordinates
     x_prime = [None for i in range(len(xyPoints))]
     y_prime = [None for i in range(len(xyPoints))]
+
+    #Loop through each of the points and transform it (could be condensed, but opting for being explicit)
     for i,pt in enumerate(xyPoints):
-        x_prime[i],y_prime[i] = transformer.transform(pt[0],pt[1])
+        #Create an empty point
+        point = ogr.Geometry(ogr.wkbPoint)
+
+        #Add coordinates
+        point.AddPoint(*pt)
+
+        #Apply the transform
+        point.Transform(transform)
+        
+        #Capture the transformed coordinates
+        x_prime[i] = point.GetX()
+        y_prime[i] = point.GetY()
 
     return (x_prime,y_prime)
-
 
 #%%
 def _check_tnm_dataset_datatype_compatibility(dataset:str, dataType:str):
